@@ -355,7 +355,7 @@ public class SceneKitVideoRecorder: NSObject, AVAudioRecorderDelegate {
 
     let savePathUrl : URL = self.options.outputUrl
 
-    let assetExport: AVAssetExportSession = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality)!
+    let assetExport: AVAssetExportSession = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetPassthrough)!
     assetExport.outputFileType = AVFileTypeMPEG4
     assetExport.outputURL = savePathUrl
     assetExport.shouldOptimizeForNetworkUse = true

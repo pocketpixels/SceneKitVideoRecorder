@@ -20,6 +20,7 @@ extension SceneKitVideoRecorder {
     public var codec: String
     public var deleteFileIfExists: Bool
     public var useMicrophone: Bool
+    public var audioSampleRate: Int32
     public var antialiasingMode: SCNAntialiasingMode
 
     public static var `default`: Options {
@@ -33,6 +34,7 @@ extension SceneKitVideoRecorder {
                      codec: AVVideoCodecH264,
                      deleteFileIfExists: true,
                      useMicrophone: true,
+                     audioSampleRate: 12000,
                      antialiasingMode: .multisampling4X)
     }
     
@@ -47,7 +49,7 @@ extension SceneKitVideoRecorder {
     var assetWriterAudioInputSettings: [String : Any] {
       return [
         AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-        AVSampleRateKey: 12000,
+        AVSampleRateKey: audioSampleRate,
         AVNumberOfChannelsKey: 1,
         AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
       ]
