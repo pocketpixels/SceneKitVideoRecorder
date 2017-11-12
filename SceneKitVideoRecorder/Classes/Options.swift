@@ -18,6 +18,7 @@ extension SceneKitVideoRecorder {
     public var videoOnlyUrl: URL
     public var fileType: String
     public var codec: String
+    public var videoCompressionSettings:  [String : Any]
     public var deleteFileIfExists: Bool
     public var useMicrophone: Bool
     public var audioSampleRate: Int32
@@ -32,6 +33,7 @@ extension SceneKitVideoRecorder {
                      videoOnlyUrl: URL(fileURLWithPath: NSTemporaryDirectory() + "video.mp4"),
                      fileType: AVFileType.m4v.rawValue,
                      codec: AVVideoCodecH264,
+                     videoCompressionSettings: [:],
                      deleteFileIfExists: true,
                      useMicrophone: true,
                      audioSampleRate: 12000,
@@ -42,7 +44,8 @@ extension SceneKitVideoRecorder {
       return [
         AVVideoCodecKey: codec,
         AVVideoWidthKey: videoSize.width,
-        AVVideoHeightKey: videoSize.height
+        AVVideoHeightKey: videoSize.height,
+        AVVideoCompressionPropertiesKey: videoCompressionSettings
       ]
     }
     
