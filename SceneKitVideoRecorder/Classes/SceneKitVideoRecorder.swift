@@ -93,23 +93,9 @@ public class SceneKitVideoRecorder: NSObject, AVAudioRecorderDelegate {
     setupVideo()
   }
 
-  @discardableResult public func cleanUp() -> URL {
-
-    var output = options.outputUrl
-
-    if options.deleteFileIfExists {
-      let nameOnly = (options.outputUrl.lastPathComponent as NSString).deletingPathExtension
-      let fileExt  = (options.outputUrl.lastPathComponent as NSString).pathExtension
-      let tempFileName = NSTemporaryDirectory() + nameOnly + "TMP." + fileExt
-      output = URL(fileURLWithPath: tempFileName)
-
-      FileController.move(from: options.outputUrl, to: output)
-
-      FileController.delete(file: self.options.audioOnlyUrl)
-      FileController.delete(file: self.options.videoOnlyUrl)
-    }
-
-    return output
+  public func cleanUp() {
+    FileController.delete(file: self.options.audioOnlyUrl)
+    FileController.delete(file: self.options.videoOnlyUrl)
   }
 
   public func setupAudio() {
@@ -211,15 +197,19 @@ public class SceneKitVideoRecorder: NSObject, AVAudioRecorderDelegate {
 
       this.stopDisplayLink()
 
+        if this.options.deleteFileIfExists && FileManager.default.fileExists(atPath: this.options.outputUrl.path) {
+            try? FileManager.default.removeItem(at: this.options.outputUrl)
+        }
+        
       if this.useAudio {
         this.mergeVideoAndAudio(videoUrl: this.options.videoOnlyUrl, audioUrl: this.options.audioOnlyUrl) {
-          let outputUrl = this.cleanUp()
-          completionHandler(outputUrl)
+          this.cleanUp()
+          completionHandler(this.options.outputUrl)
         }
       }else{
         FileController.move(from: this.options.videoOnlyUrl, to: this.options.outputUrl)
-        let outputUrl = this.cleanUp()
-        completionHandler(outputUrl)
+        this.cleanUp()
+        completionHandler(this.options.outputUrl)
       }
 
       this.prepare()
