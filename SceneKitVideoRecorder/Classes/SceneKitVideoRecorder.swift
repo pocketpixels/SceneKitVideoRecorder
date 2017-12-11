@@ -330,7 +330,8 @@ public class SceneKitVideoRecorder: NSObject, AVAudioRecorderDelegate {
     do{
       try mutableCompositionVideoTrack[0].insertTimeRange(CMTimeRangeMake(kCMTimeZero, aVideoAssetTrack.timeRange.duration), of: aVideoAssetTrack, at: kCMTimeZero)
 
-      try mutableCompositionAudioTrack[0].insertTimeRange(CMTimeRangeMake(kCMTimeZero, aVideoAssetTrack.timeRange.duration), of: aAudioAssetTrack, at: kCMTimeZero)
+      try mutableCompositionAudioTrack[0].insertTimeRange(CMTimeRangeMake(kCMTimeZero, aVideoAssetTrack.timeRange.duration), of: aAudioAssetTrack,
+                                                          at: CMTime(seconds: options.videoDelayCompensation, preferredTimescale: Int32(self.options.fps)))
 
     }catch{
 

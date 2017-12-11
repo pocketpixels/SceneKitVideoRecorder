@@ -23,6 +23,7 @@ extension SceneKitVideoRecorder {
     public var useMicrophone: Bool
     public var audioSampleRate: Int32
     public var antialiasingMode: SCNAntialiasingMode
+    public var videoDelayCompensation: Double
 
     public static var `default`: Options {
       return Options(timeScale: 1000,
@@ -37,7 +38,8 @@ extension SceneKitVideoRecorder {
                      deleteFileIfExists: true,
                      useMicrophone: true,
                      audioSampleRate: 12000,
-                     antialiasingMode: .multisampling4X)
+                     antialiasingMode: .multisampling4X,
+                     videoDelayCompensation: 0.0)
     }
     
     var assetWriterVideoInputSettings: [String : Any] {
